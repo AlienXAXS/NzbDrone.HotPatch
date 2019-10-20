@@ -47,6 +47,10 @@
     <Reference Include="NzbDrone.Common">
       <HintPath>..\ExternalModules\Radarr\_output\NzbDrone.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NzbDrone.Core, Version=10.0.0.32921, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalModules\Radarr\_output\NzbDrone.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -67,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleAlerts.cs" />
+    <Compile Include="harmony\nzbdrone.core\healthcheck\Checks.cs" />
+    <Compile Include="ParamClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

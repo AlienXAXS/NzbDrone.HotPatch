@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using Harmony;
 using NLog;
 using NzbDrone.Common.EnvironmentInfo;
 using NzbDrone.Common.Instrumentation;
@@ -44,6 +45,14 @@ namespace NzbDrone.HotPatch
                     System.Console.WriteLine("NLog Exception: " + ex.ToString());
                     throw;
                 }
+
+                var harmony = HarmonyInstance.Create("com.agngaming.nzbdrone.hotpatch");
+
+                var original = AccessTools.Method(typeof(Core.HealthCheck.Checks.RootFolderCheck), "Check");
+                var prefix = AccessTools.Method(typeof(harmony.nzbdrone.core.healthcheck.Checks), "Check");
+                harmony.Patch(original, new HarmonyMethod(prefix), null);
+
+
                 Bootstrap.Start(startupArgs, new ConsoleAlerts());
             }
             catch (SocketException e)
