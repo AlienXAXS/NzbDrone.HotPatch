@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Harmony;
 
@@ -12,17 +13,19 @@ namespace NzbDrone.HotPatch.Harmony
         private readonly List<PatchMakeup> _patches = new List<PatchMakeup>();
         private class PatchMakeup
         {
-            public MethodInfo originalMethod;
-            public HarmonyMethod patchedMethod;
+            public readonly MethodInfo originalMethod;
+            public readonly HarmonyMethod patchedMethod;
+            public bool isPostFix = false;
 
-            public PatchMakeup(MethodInfo arg1, HarmonyMethod arg2)
+            public PatchMakeup(MethodInfo arg1, HarmonyMethod arg2, bool isPostFix = false)
             {
                 originalMethod = arg1;
                 patchedMethod = arg2;
+                this.isPostFix = isPostFix;
             }
         }
 
-        public void NewPostfixPatch(MethodInfo originalMethod, MethodInfo patchedMethod)
+        public void NewPrefixPatch(MethodInfo originalMethod, MethodInfo patchedMethod)
         {
             if (originalMethod != null)
             {
@@ -41,28 +44,48 @@ namespace NzbDrone.HotPatch.Harmony
             }
         }
 
+        public void NewPostfixPatch(MethodInfo originalMethod, MethodInfo patchedMethod)
+        {
+            if (originalMethod != null)
+            {
+                if (patchedMethod != null)
+                {
+                    _patches.Add(new PatchMakeup(originalMethod, new HarmonyMethod(patchedMethod), true));
+                }
+                else
+                {
+                    // Patched method is null
+                }
+            }
+            else
+            {
+                // Original is null
+            }
+        }
+
         /// <summary>
         /// Applies all patches in the order they were sent in.
         /// </summary>
         /// <returns>Returns a bool value if all of the patches were successful or not</returns>
         public bool ApplyPatches()
         {
-            //[HarmonyPatch(typeof(Core.HealthCheck.Checks.RootFolderCheck))]
-            //[HarmonyPatch("Check")]
-
             try
             {
                 foreach (var patch in _patches)
                 {
-                    Utility.WriteToConsole($"Attempting to patch {patch.originalMethod.Name}", ConsoleColor.Blue);
-                    _harmonyInstance.Patch(patch.originalMethod, patch.patchedMethod, null);
+                    Utility.WriteToConsole($"Attempting to patch {patch.originalMethod.Name} in {patch.originalMethod.DeclaringType.FullName}", ConsoleColor.Blue);
+                    if (patch.isPostFix)
+                        _harmonyInstance.Patch(patch.originalMethod, postfix: patch.patchedMethod);
+                    else
+                        _harmonyInstance.Patch(patch.originalMethod, patch.patchedMethod, null);
+                    Utility.WriteToConsole($"Patching {patch.originalMethod.Name} successful.", ConsoleColor.Blue);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Utility.WriteToConsole($"ERROR: {ex.Message}\r\n\r\n{ex.StackTrace}", ConsoleColor.Red);
+                Utility.WriteToConsole($"ERROR: {ex.Message}\r\n\r\n{ex.InnerException?.Message}", ConsoleColor.Red);
                 return false;
             }
         }

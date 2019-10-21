@@ -23,10 +23,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\ExternalModules\Radarr\_output\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -72,8 +72,12 @@
   <ItemGroup>
     <Compile Include="ConsoleAlerts.cs" />
     <Compile Include="Harmony\GenericPatches\NOP.cs" />
-    <Compile Include="Harmony\NZBDrone\Versions\1_0_0_32922\HealthCheck\Checks.cs" />
-    <Compile Include="Harmony\NZBDrone\Versions\1_0_0_32922\Patches.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\MediaFiles\MovieFileMovingService.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Movies\MovieMoveService.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Movies\MovieService.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Organizer\FileNameBuilder.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\HealthCheck\Checks.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Patches.cs" />
     <Compile Include="Harmony\PatchManager.cs" />
     <Compile Include="Harmony\PatchWrapper.cs" />
     <Compile Include="ParamClass.cs" />

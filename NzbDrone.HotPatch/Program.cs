@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using NLog;
+using NLog.LayoutRenderers;
 using NzbDrone.Common.EnvironmentInfo;
 using NzbDrone.Common.Instrumentation;
 using NzbDrone.HotPatch.Harmony;
@@ -32,7 +33,6 @@ namespace NzbDrone.HotPatch
                 Console.ForegroundColor = oldColor;
 
                 var patchManager = new PatchManager();
-                patchManager.BeginPatching();
 
                 var startupArgs = new StartupContext(args);
                 try
@@ -45,7 +45,18 @@ namespace NzbDrone.HotPatch
                     throw;
                 }
 
-                Bootstrap.Start(startupArgs, new ConsoleAlerts());
+                if (patchManager.BeginPatching())
+                {
+                    Utility.WriteToConsole("All patches successful, starting Radarr.", ConsoleColor.Green);
+                    Bootstrap.Start(startupArgs, new ConsoleAlerts());
+                }
+                else
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+                    Logger.Fatal("Some HotPatch patches were not applied successfully.  Are you using a supported version of Radarr?");
+                    Exit(ExitCodes.UnknownFailure);
+                }
             }
             catch (SocketException e)
             {

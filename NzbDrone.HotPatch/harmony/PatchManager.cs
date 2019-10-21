@@ -29,12 +29,18 @@ namespace NzbDrone.HotPatch.Harmony
             Utility.WriteToConsole("Detecting the version of Radarr", ConsoleColor.DarkMagenta);
             var productVersion = GetRadarrVersion();
             Utility.WriteToConsole($"Radarr Version {productVersion} detected!", ConsoleColor.DarkMagenta);
+
+#if DEBUG
+            var patchesx = new NZBDrone.Versions._0_2_0_1358.Patches();
+            return patchesx.ApplyPatches(_patchWrapper);
+#endif
+
             switch (productVersion)
             {
                 // 21/10/2019
-                case "10.0.0.32922":
-                    var patches = new NZBDrone.Versions._1_0_0_32922.Patches();
-                    return patches.ApplyPatches();
+                case "0.2.0.1358":
+                    var patches = new NZBDrone.Versions._0_2_0_1358.Patches();
+                    return patches.ApplyPatches(_patchWrapper);
 
                 // Version is not supported
                 default:
