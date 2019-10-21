@@ -71,10 +71,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleAlerts.cs" />
-    <Compile Include="harmony\nzbdrone.core\healthcheck\Checks.cs" />
+    <Compile Include="Harmony\GenericPatches\NOP.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\1_0_0_32922\HealthCheck\Checks.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\1_0_0_32922\Patches.cs" />
+    <Compile Include="Harmony\PatchManager.cs" />
+    <Compile Include="Harmony\PatchWrapper.cs" />
     <Compile Include="ParamClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

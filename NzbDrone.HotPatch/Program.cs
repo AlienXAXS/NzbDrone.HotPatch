@@ -7,6 +7,7 @@ using Harmony;
 using NLog;
 using NzbDrone.Common.EnvironmentInfo;
 using NzbDrone.Common.Instrumentation;
+using NzbDrone.HotPatch.Harmony;
 using Radarr.Host;
 
 namespace NzbDrone.HotPatch
@@ -32,8 +33,10 @@ namespace NzbDrone.HotPatch
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("AGN Gaming Radarr Hotpatch Loading...");
                 Console.WriteLine("Attempting to bootstrap Radarr, here goes!");
-
                 Console.ForegroundColor = oldColor;
+
+                var patchManager = new PatchManager();
+                patchManager.BeginPatching();
 
                 var startupArgs = new StartupContext(args);
                 try
@@ -45,13 +48,6 @@ namespace NzbDrone.HotPatch
                     System.Console.WriteLine("NLog Exception: " + ex.ToString());
                     throw;
                 }
-
-                var harmony = HarmonyInstance.Create("com.agngaming.nzbdrone.hotpatch");
-
-                var original = AccessTools.Method(typeof(Core.HealthCheck.Checks.RootFolderCheck), "Check");
-                var prefix = AccessTools.Method(typeof(harmony.nzbdrone.core.healthcheck.Checks), "Check");
-                harmony.Patch(original, new HarmonyMethod(prefix), null);
-
 
                 Bootstrap.Start(startupArgs, new ConsoleAlerts());
             }
