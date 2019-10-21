@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NzbDrone.HotPatch.Harmony.GenericPatches
+﻿namespace NzbDrone.HotPatch.Harmony.GenericPatches
 {
     class NOP
     {
