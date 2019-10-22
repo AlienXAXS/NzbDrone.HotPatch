@@ -35,14 +35,26 @@
     <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Marr.Data, Version=3.17.7232.32891, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalModules\Radarr\_output\Marr.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net40\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Hosting.2.1.0\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalModules\Radarr\_output\Nancy.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.0\lib\net40-client\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NzbDrone.Api, Version=10.0.0.26073, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalModules\Radarr\_output\NzbDrone.Api.dll</HintPath>
     </Reference>
     <Reference Include="NzbDrone.Common">
       <HintPath>..\ExternalModules\Radarr\_output\NzbDrone.Common.dll</HintPath>
@@ -72,10 +84,12 @@
   <ItemGroup>
     <Compile Include="ConsoleAlerts.cs" />
     <Compile Include="Harmony\GenericPatches\NOP.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Api\Movies\MovieBulkImportModule.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\MediaFiles\MovieFileMovingService.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Movies\MovieMoveService.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Movies\MovieService.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\Organizer\FileNameBuilder.cs" />
+    <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Core\RootFolders\RootFolderService.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\HealthCheck\Checks.cs" />
     <Compile Include="Harmony\NZBDrone\Versions\0_2_0_1358\Patches.cs" />
     <Compile Include="Harmony\PatchManager.cs" />

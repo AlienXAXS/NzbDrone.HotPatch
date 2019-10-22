@@ -1,4 +1,6 @@
-﻿namespace NzbDrone.HotPatch.Harmony.GenericPatches
+﻿using System;
+
+namespace NzbDrone.HotPatch.Harmony.GenericPatches
 {
     class NOP
     {
@@ -6,8 +8,9 @@
         /// Used as a NOP, stops the original method from executing at all.
         /// </summary>
         /// <returns></returns>
-        public static bool NoOperation()
+        public static bool NoOperation(ref object __instance)
         {
+            Utility.WriteToConsole($"Skipped execution of {__instance.GetType().FullName} via NOP", ConsoleColor.Red);
             return false;
         }
 
